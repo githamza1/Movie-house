@@ -1,35 +1,33 @@
 import { useRouter } from 'next/router';
 
-const HelpPage = () => {
+export default function HelpPage() {
   const router = useRouter();
   const { slug } = router.query;
 
-  // If slug is undefined or empty array, show the default message for /help
-  if (!slug || slug.length === 0) {
-    return <p>Welcome to the Help page. Please choose a section from the menu.</p>;
+  const page = slug ? slug[0] : 'index'; // if no slug, it's /help
+
+  let content;
+
+  switch (page) {
+    case 'faqs':
+      content = <div><h1>FAQs</h1><p>Frequently Asked Questions...</p></div>;
+      break;
+    case 'contact':
+      content = <div><h1>Contact Us</h1><p>Email us at support@moviehouse.com</p></div>;
+      break;
+    case 'privacy':
+      content = <div><h1>Privacy Policy</h1><p>We respect your privacy...</p></div>;
+      break;
+    case 'index':
+      content = <div><h1>Help Center</h1><p>Welcome to the help section.</p></div>;
+      break;
+    default:
+      content = <div><h1>Help - {page}</h1><p>Page not found in Help.</p></div>;
   }
 
-  const section = slug[0]; // The first part of the slug array
-
-  const renderContent = () => {
-    switch (section) {
-      case 'faqs':
-        return <p>Here are the frequently asked questions (FAQs).</p>;
-      case 'contact':
-        return <p>Contact us at support@moviehouse.com.</p>;
-      case 'privacy':
-        return <p>Read our privacy policy here.</p>;
-      default:
-        return <p>Sorry, the section "{section}" is not available.</p>;
-    }
-  };
-
   return (
-    <div>
-      <h1>Help Section</h1>
-      {renderContent()}
+    <div style={{ padding: '2rem' }}>
+      {content}
     </div>
   );
-};
-
-export default HelpPage;
+}
