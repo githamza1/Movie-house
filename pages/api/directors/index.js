@@ -4,7 +4,7 @@ import Link from 'next/link';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function DirectorsPage() {
-  const { data, error } = useSWR('/api/directors', fetcher);
+  const { data, error } = useSWR('/api/directors', fetcher); // swr using 
 
   if (error) return <p>Failed to load directors.</p>;
   if (!data) return <p>Loading...</p>;
